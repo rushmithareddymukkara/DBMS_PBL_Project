@@ -1,0 +1,49 @@
+All names and addresses below are fictional.
+INSERT INTO department VALUES (1,'CSE','Computer Science and Engineering'), (2,'ECE','Electronics and Communication Engineering');
+INSERT INTO programme VALUES (1,1,'BTECH-CSE','B.Tech Computer Science and Engineering','Undergraduate',4);
+INSERT INTO course VALUES
+ (1,1,'DBMS201','Database Management Systems',3.0,3.0,'Lecture'),
+ (2,1,'DSA202','Data Structures and Algorithms',4.0,4.0,'Lecture'),
+ (3,1,'CSP101L','Programming Laboratory',2.0,2.0,'Lab');
+INSERT INTO academic_term VALUES (1,'2026-27','Semester I',DATE '2026-08-01',DATE '2026-12-01');
+INSERT INTO section VALUES (1,1,1,'CSE-A',42),(2,1,1,'CSE-B',38);
+INSERT INTO faculty VALUES
+ (1,1,'F-DEMO-01','A. Rao','faculty01@example.edu','Assistant Professor',TRUE),
+ (2,1,'F-DEMO-02','S. Menon','faculty02@example.edu','Assistant Professor',TRUE),
+ (3,1,'F-DEMO-03','R. Iyer','faculty03@example.edu','Assistant Professor',TRUE);
+INSERT INTO workload_norm VALUES (1,'Assistant Professor',16.0,DATE '2026-01-01',DATE '2027-01-01');
+INSERT INTO faculty_norm VALUES
+ (1,1,1,DATE '2026-01-01',DATE '2027-01-01'),(2,2,1,DATE '2026-01-01',DATE '2027-01-01'),(3,3,1,DATE '2026-01-01',DATE '2027-01-01');
+INSERT INTO room VALUES (1,'A-201','Academic Block A',60,'Classroom'),(2,'LAB-01','Computing Block',48,'Laboratory');
+INSERT INTO time_slot VALUES
+ (1,'MON-0900',1,TIME '09:00',TIME '10:00'),(2,'TUE-1100',2,TIME '11:00',TIME '12:00'),
+ (3,'WED-0900',3,TIME '09:00',TIME '10:00'),(4,'THU-1000',4,TIME '10:00',TIME '11:00'),
+ (5,'FRI-1300',5,TIME '13:00',TIME '14:00'),(6,'MON-1100',1,TIME '11:00',TIME '12:00');
+INSERT INTO course_assignment (assignment_id,course_id,section_id,faculty_id,status) VALUES
+ (1,1,1,1,'ACTIVE'),(2,2,1,2,'ACTIVE'),(3,3,1,3,'ACTIVE'),(4,1,2,1,'ACTIVE'),(5,2,2,3,'ACTIVE');
+INSERT INTO timetable_entry VALUES
+ (1,1,1,1,DATE '2026-08-01',DATE '2026-12-01','ACTIVE'),
+ (2,2,1,2,DATE '2026-08-01',DATE '2026-12-01','ACTIVE'),
+ (3,3,2,3,DATE '2026-08-01',DATE '2026-12-01','ACTIVE'),
+ (4,4,1,4,DATE '2026-08-01',DATE '2026-12-01','ACTIVE'),
+ (5,5,1,5,DATE '2026-08-01',DATE '2026-12-01','ACTIVE');
+INSERT INTO substitution (substitution_id,entry_id,substitute_faculty_id,substitution_date,reason,status,created_by)
+ VALUES (1,1,2,DATE '2026-09-07','Approved faculty leave','APPROVED','coordinator.demo');
+INSERT INTO change_log (change_id,entity_name,record_key,action,changed_by,change_summary)
+ VALUES (1,'course_assignment','1','INSERT','coordinator.demo','Initial synthetic course allocation');
+-- Advance identity sequences after explicit sample identifiers.
+SELECT setval(pg_get_serial_sequence('department','department_id'),(SELECT max(department_id) FROM department),true);
+SELECT setval(pg_get_serial_sequence('programme','programme_id'),(SELECT max(programme_id) FROM programme),true);
+SELECT setval(pg_get_serial_sequence('course','course_id'),(SELECT max(course_id) FROM course),true);
+SELECT setval(pg_get_serial_sequence('academic_term','term_id'),(SELECT max(term_id) FROM academic_term),true);
+SELECT setval(pg_get_serial_sequence('section','section_id'),(SELECT max(section_id) FROM section),true);
+SELECT setval(pg_get_serial_sequence('faculty','faculty_id'),(SELECT max(faculty_id) FROM faculty),true);
+SELECT setval(pg_get_serial_sequence('workload_norm','norm_id'),(SELECT max(norm_id) FROM workload_norm),true);
+SELECT setval(pg_get_serial_sequence('faculty_norm','faculty_norm_id'),(SELECT max(faculty_norm_id) FROM faculty_norm),true);
+SELECT setval(pg_get_serial_sequence('room','room_id'),(SELECT max(room_id) FROM room),true);
+SELECT setval(pg_get_serial_sequence('time_slot','slot_id'),(SELECT max(slot_id) FROM time_slot),true);
+SELECT setval(pg_get_serial_sequence('course_assignment','assignment_id'),(SELECT max(assignment_id) FROM course_assignment),true);
+SELECT setval(pg_get_serial_sequence('timetable_entry','entry_id'),(SELECT max(entry_id) FROM timetable_entry),true);
+SELECT setval(pg_get_serial_sequence('substitution','substitution_id'),(SELECT max(substitution_id) FROM substitution),true);
+SELECT setval(pg_get_serial_sequence('change_log','change_id'),(SELECT max(change_id) FROM change_log),true);
+
